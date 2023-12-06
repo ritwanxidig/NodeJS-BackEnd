@@ -9,13 +9,14 @@ export const isOwner = async (
 ) => {
   try {
     const { id } = req.params;
-    const currentUserId = get(req, "identity._id");
+    const currentUserId = get(req, "identity._id") as string;
     if (!currentUserId)
       return res
         .status(403)
         .json({ msg: "the current user is not authenticated" })
         .end();
-    if (currentUserId !== id)
+    console.log(currentUserId.toString());
+    if (currentUserId.toString() !== id)
       return res.status(403).json({ msg: "the current user is not the owner" });
 
     next();
